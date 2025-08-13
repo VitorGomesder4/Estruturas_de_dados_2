@@ -7,12 +7,8 @@
 // 1: Relatorio de aprovados
 // 2: Relatorio de reprovados
 // 3: Sair do programa
-
 //&& se a primeira condição for true ele ja quebra e nem checa as outras (curto circuito)
-
 //& mesmo se a primeira condição for true para quebra ele continua a checar o proximo (sem curto circuito)
-
-
 #include <stdio.h>
 
 #define max_alunos 100
@@ -20,7 +16,7 @@
 
 char char_sn = '\0';
 float media_apr = 0, somatorio = 0;
-int quantos_alunos = 0, quantas_notas_a = 0, len_notas = 1, contador = 0;
+int quantos_alunos = 0, quantas_notas_a = 0, len_notas = 1, contador = 0, total_alunos = 0, total_alunos_a = 0, total_alunos_r = 0;
 
 struct alunos{
     char nome[40];
@@ -31,24 +27,26 @@ struct alunos{
 };
 
 alunos aluno[max_alunos] = {};
+alunos alunos_aprovados[max_alunos] = {};
+alunos aluno_reprovados[max_alunos] = {};
 
 //========================================================================================//  
-int main(){
+void cadastro(){
 
     //Estabelecendo os valores para os iteradores e media de aprovação
 
     do {
-        printf("Quantos alunos a turma possui? ");
+        printf("\nQuantos alunos a turma possui? ");
         scanf("%d", &quantos_alunos);
     }while (quantos_alunos<1 || quantos_alunos>100);
 
     do {
-        printf("Media aprovação: (5 a 8) ");
+        printf("\nMedia aprovação: (5 a 8) ");
         scanf("%f", &media_apr);
     }while (media_apr<5 || media_apr>8);
     
     do {
-        printf("Notas por aluno 3 a 10: ");
+        printf("\nNotas por aluno 3 a 10: ");
         scanf("%d", &quantas_notas_a);
     }while (quantas_notas_a<3 || quantas_notas_a>10);
 
@@ -58,17 +56,17 @@ int main(){
 
     for (int i=0; i<quantos_alunos; i++) { //Para cada aluno "i", faça o abaixo:
 
-        printf("Nome do aluno {%d}", i+1);
+        printf("\nNome do aluno {%d}", i+1);
         scanf("%s", aluno[i].nome);
 
         do {
-            printf("Sexo (M/N)");
+            printf("\nSexo (M/F)");
             scanf(" %c", &aluno[i].sexo);
         }while (aluno[i].sexo != 'M' && aluno[i].sexo != 'm' && aluno[i].sexo != 'F' && aluno[i].sexo != 'f');
 
 
         for (int j=0; j<quantas_notas_a; j++) { //Para cada nota "j" do aluno "i" do:
-            printf("Digite a %d nota", j+1);
+            printf("\nDigite a %d nota", j+1);
             scanf("%f", &aluno[i].arr_notas[j]);
             contador+=1;
         }
@@ -83,23 +81,70 @@ int main(){
         //SE nota > media de aprovação, aprovado sera verdadeiro, Else: aprovado sera falso
         if (aluno[i].media >= media_apr) {
             aluno[i].aprovado = true;
+            alunos_aprovados[total_alunos_a] = aluno[i];
+            total_alunos_a++;
         }else {
             aluno[i].aprovado = false;
+            aluno_reprovados[total_alunos_r] = aluno[i];
+            total_alunos_r++;
         }
+        total_alunos += 1;
 
         //Resetando somatorio e contador para proximo aluno
         somatorio = 0;
         contador = 0;
 
+        if (i+1 != quantos_alunos) {
+            //Perguntando se o usuario se deseja continuar, tambem a razao da variavel 'contador':
+            do {
+                printf("\n\nVocê informou %d alunos e faltam %d", i+1, quantos_alunos-(i+1));
+                printf("\nContinuar com o proximo aluno? (Y/N)");
+                scanf(" %c", &char_sn);
+            }while (char_sn != 'Y' && char_sn != 'y' && char_sn != 'N' && char_sn != 'n');
 
-        //Perguntando se o usuario se deseja continuar, tambem a razao da variavel 'contador':
-        do {
-            printf("Continuar com o proximo aluno ou parar por aqui? (Y/N)");
-            scanf("%c", &char_sn);
-        }while (char_sn != 'Y' && char_sn != 'y' && char_sn != 'N' && char_sn != 'n');
+            if (char_sn=='Y' || char_sn=='y') {
+                continue;
+            }else {
+                total_alunos = i;
+                break;
+            }
+        }
     }
+//========================================================================================//
+}
 
-//========================================================================================//  
+
+int main(){
+    cadastro();
+
+    bool ocorrencia = true;
+    char decide = '\0';
+
+    while (ocorrencia) {
+        
+        printf("\n\n1.Relatorio alunos aprovados 2.Relatorio alunos reprovados\n");
+        scanf(" %c", &decide);
+
+        switch(decide) {
+
+            case '1':
+                printf("\nAprovados: ");
+                for (int i = 0; i<total_alunos_a; i++) {
+                    printf("\n%s", alunos_aprovados[i].nome);
+                }
+                ocorrencia = false;
+                break;
+
+            case '2':
+                printf("\nReprovados: ");
+                for (int i = 0; i<total_alunos_r; i++) {
+                    printf("\n%s", aluno_reprovados[i].nome);
+                }
+                ocorrencia = false;
+                break;
+            }
+    }
+    
     return 0;
 }
 
