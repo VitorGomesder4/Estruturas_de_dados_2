@@ -122,7 +122,7 @@ int main(){
 
     while (ocorrencia) {
         
-        printf("\n\n1.Relatorio alunos aprovados 2.Relatorio alunos reprovados\n");
+        printf("\n\n1.Relatorio alunos aprovados 2.Relatorio alunos reprovados 3.Exit\n");
         scanf(" %c", &decide);
 
         switch(decide) {
@@ -132,7 +132,6 @@ int main(){
                 for (int i = 0; i<total_alunos_a; i++) {
                     printf("\n%s", alunos_aprovados[i].nome);
                 }
-                ocorrencia = false;
                 break;
 
             case '2':
@@ -140,6 +139,9 @@ int main(){
                 for (int i = 0; i<total_alunos_r; i++) {
                     printf("\n%s", aluno_reprovados[i].nome);
                 }
+                break;
+    
+            case '3':
                 ocorrencia = false;
                 break;
             }
