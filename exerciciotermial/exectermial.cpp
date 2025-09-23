@@ -1,30 +1,15 @@
 #include <stdio.h>
-
-unsigned long long int termial(int termial){ //Função para calcular o termial de n
-
-    unsigned long long int total = 0; //valor neutro para soma
-
-    for (int i = termial; i > 0; i--) {
-        total += i;
-    }
-    
-    return total;
-}
-
-unsigned long long int fatorial(int fatorial){ //Função para calcular o fatorial de n
-    
-    unsigned long long total = 1; //valor neutro para multiplicação
-
-    for (int i = fatorial; i > 0; i--) {
-        total = total * i;
-    }
-    return total;
-}
+#include "func/funcs.h"
 
 int main(){
+    
+    int base, expoente; //parametros para exponencial podem ser negativos
+
+    float exponencial_negativo_resultado = 0;
+    
     unsigned int parametro_termial = 0, parametro_fatorial = 0; //parametros
 
-    unsigned long long termial_resultado = 0, fatorial_resultado = 0; //resultados
+    unsigned long long termial_resultado = 0, fatorial_resultado = 0, exponencial_resultado = 0; //resultados
 
     unsigned short int choice; //escolha no menu
 
@@ -34,7 +19,8 @@ int main(){
         //Esperando usuario escolher oque fazer
         printf("\n\n(1): Calcular termial");
         printf("\n(2): Calcular fatorial");
-        printf("\n(3): Sair\n");
+        printf("\n(3): Calcular exponencial");
+        printf("\n(4): Sair\n");
         scanf("%hu", &choice);
 
         switch (choice) {
@@ -80,8 +66,24 @@ int main(){
 
                 break;
 
+            case 3://No caso 3 é calculado o x^y e depois exibido o resultado
+                
+                printf("\nDigite a base: ");
+                scanf("%d", &base);
 
-            case 3: //Nesse caso a execução é terminada
+                printf("\nDigite o expoente: ");
+                scanf("%d", &expoente);
+
+                if (expoente < 0) {
+                    exponencial_negativo_resultado = exponencial_negativo(base, expoente);
+                    printf("\n\n%d^%d = %f", base, expoente, exponencial_negativo_resultado);
+                }else {
+                    exponencial_resultado = exponencial(base, expoente);
+                    printf("\n\n%d^%d = %lld", base, expoente, exponencial_resultado);
+                }
+                break;
+
+            case 4: //Nesse caso a execução é terminada
                 printf("\nTerminando execução..\n");
                 running = false;
                 break;

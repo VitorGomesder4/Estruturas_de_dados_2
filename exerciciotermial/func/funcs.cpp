@@ -1,6 +1,6 @@
 #include <cstdlib>
 
-unsigned long long int termial(int termial){ //Função para calcular o termial de n
+unsigned long long termial(int termial){ //Função para calcular o termial de n
 
     unsigned long long int total = 0; //valor neutro para soma
 
@@ -11,7 +11,7 @@ unsigned long long int termial(int termial){ //Função para calcular o termial 
     return total;
 }
 
-unsigned long long int fatorial(int fatorial){ //Função para calcular o fatorial de n
+unsigned long long fatorial(int fatorial){ //Função para calcular o fatorial de n
     
     unsigned long long total = 1; //valor neutro para multiplicação
 
@@ -21,7 +21,7 @@ unsigned long long int fatorial(int fatorial){ //Função para calcular o fatori
     return total;
 }
 
-long long int exponencial(int base, int expoente){ //Função para calcular o fatorial de n
+long long exponencial(int base, int expoente){ //Função para calcular o fatorial de n
     
     unsigned long long total = 1; //valor neutro para multiplicação
     
